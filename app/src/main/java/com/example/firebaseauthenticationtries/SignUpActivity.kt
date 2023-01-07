@@ -1,5 +1,6 @@
 package com.example.firebaseauthenticationtries
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
@@ -26,6 +27,8 @@ class SignUpActivity : AppCompatActivity() {
                     if(it.isSuccessful){
                         auth.signOut()
                         Toast.makeText(this,"Created",Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this,SignInActivity::class.java))
+                        finish()
                     }
                     else
                         Toast.makeText(this,it.exception?.message,Toast.LENGTH_SHORT).show()

@@ -31,13 +31,23 @@ class SignInActivity : AppCompatActivity() {
                         Toast.makeText(this,"Signed in successfully",Toast.LENGTH_SHORT).show()
                         finish()
                     } else {
-                        val snackbar=Snackbar.make(signinActivity,"User not found!!",Snackbar.ANIMATION_MODE_SLIDE)
+                        val snackbar=Snackbar.make(signinActivity,"Account/Password is not correct!!",Snackbar.ANIMATION_MODE_SLIDE)
                         snackbar.setAction("Register"){
                             startActivity(Intent(this,SignUpActivity::class.java))
                         }.setActionTextColor(Color.YELLOW).setBackgroundTint(Color.BLACK).show()
                     }
                 }
             }
+        }
+
+        forgot_p_text.setOnClickListener {
+            startActivity(Intent(this,ForgotPassword::class.java))
+            finish()
+        }
+
+        create_acc_text.setOnClickListener {
+            startActivity(Intent(this,SignUpActivity::class.java))
+            finish()
         }
     }
 
