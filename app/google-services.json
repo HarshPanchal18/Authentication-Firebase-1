@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:917109330393:android:b8262e1104363d3b5d09c8",
+        "mobilesdk_app_id": "1:917109330393:android:55fa36157e164ec05d09c8",
         "android_client_info": {
           "package_name": "com.example.firebaseauthentication"
         }
@@ -42,6 +42,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "917109330393-88ni9h4inlatgdn4bh561m7ktigt6q0a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebaseauthenticationtries",
+            "certificate_hash": "cf4ad2cd6c2861324fb60c82763ecfb2316e3d4c"
+          }
+        },
         {
           "client_id": "917109330393-gp014qelj7auojac9lgmp1luhboutbr2.apps.googleusercontent.com",
           "client_type": 3

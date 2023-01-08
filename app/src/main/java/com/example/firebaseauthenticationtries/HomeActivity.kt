@@ -5,9 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlin.math.sign
 
 class HomeActivity : AppCompatActivity() {
 
@@ -22,7 +27,15 @@ class HomeActivity : AppCompatActivity() {
         auth=FirebaseAuth.getInstance()
         user= auth.currentUser!!
 
-        loggeduser.text=user.email
+        //val signinAcc:GoogleSignInAccount = GoogleSignIn.getLastSignedInAccount(this)!!
+        //loggeduser.text= signinAcc.displayName
+
+        /*val gso=GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+        val gsc=GoogleSignIn.getClient(this,gso)*/
+        val account=GoogleSignIn.getLastSignedInAccount(this)
+        loggeduser.text=account?.displayName
+
+        //loggeduser.text=user.email
 
         signoutbtn.setOnClickListener {
             auth.signOut()
@@ -58,15 +71,25 @@ class HomeActivity : AppCompatActivity() {
         }
 
         delete_acc_btn.setOnClickListener {
-            user.delete().addOnCompleteListener {
-                if(it.isSuccessful){
-                    Toast.makeText(this,"You're Kicked out of this",Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this,SignInActivity::class.java))
-                    finish()
-                } else {
-                    Toast.makeText(this,it.exception?.message,Toast.LENGTH_SHORT).show()
+
+            val builder=AlertDialog.Builder(this)
+            builder.setTitle("Delete User Account")
+                .setMessage("Are you sure you want to delete your account permanently?\nThis action can't be undone.")
+                .setPositiveButton("Yes, I understand"){ _, _ ->
+                    user.delete().addOnCompleteListener {
+                    if(it.isSuccessful){
+                        Toast.makeText(this,"You're Kicked out of this",Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this,SignInActivity::class.java))
+                        finish()
+                    }
+                    else
+                        Toast.makeText(this,it.exception?.message,Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
+                .setNegativeButton("No"){ _, _ -> }
+            val alertDialog=builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
         }
     }
 
